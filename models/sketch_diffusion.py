@@ -67,7 +67,8 @@ def sketch_to_image(image_path,
                     guidance_scale=3.0,
                     num_inference_steps=15,
                     prompt="a cute digital art, clean, high quality",
-                    style="cartoon"):
+                    style="cartoon",
+                    strength=0.8):
     """
     Convert rough sketch to nicer image using img2img. If diffusers/torch
     are not available, uses a lightweight PIL-based stylization fallback.
@@ -91,7 +92,7 @@ def sketch_to_image(image_path,
                 out = _pipe(
                     prompt=prompt,
                     image=init_image,
-                    strength=0.8,
+                    strength=strength,
                     guidance_scale=guidance_scale,
                     num_inference_steps=num_inference_steps
                 )
@@ -99,7 +100,7 @@ def sketch_to_image(image_path,
             out = _pipe(
                 prompt=prompt,
                 image=init_image,
-                strength=0.8,
+                strength=strength,
                 guidance_scale=guidance_scale,
                 num_inference_steps=num_inference_steps
             )

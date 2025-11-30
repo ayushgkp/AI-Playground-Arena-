@@ -4,6 +4,7 @@ const panels = {
   detect: document.getElementById("mode-detect"),
   sketch: document.getElementById("mode-sketch"),
   boss: document.getElementById("mode-boss"),
+  noise: document.getElementById("mode-noise"),
 };
 
 tabs.forEach((tab) => {
@@ -15,6 +16,12 @@ tabs.forEach((tab) => {
     for (const key in panels) {
       if (key === mode) panels[key].classList.remove("d-none");
       else panels[key].classList.add("d-none");
+    }
+
+    if (mode === 'boss') {
+      bossBattle.init();
+    } else if (mode === 'noise') {
+      shadowInverter.init();
     }
   });
 });
@@ -374,3 +381,8 @@ btnGenerateFromSketch.addEventListener("click", async () => {
 
 // ========== 3) BOSS BATTLE ==========
 // Boss battle logic is in boss_battle.js
+let bossBattle = new BossBattle();
+
+// ========== 4) SHADOW INVERTER ==========
+let shadowInverter = new ShadowInverterGame();
+

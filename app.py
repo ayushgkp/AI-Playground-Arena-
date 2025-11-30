@@ -323,5 +323,57 @@ def api_boss_analyze():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/noise/purify", methods=["POST"])
+def api_noise_purify():
+    """
+    Generate a 'purified' tile image using SD.
+    Input: 'image' (optional, noise pattern) or just prompt
+    """
+    try:
+        # If image provided, use it as init image (img2img)
+        # For now, let's just generate from text to keep it fast/simple if no image
+        prompt = "beautiful futuristic clean sci-fi city tile, isometric, high quality, glowing blue energy"
+        
+        if "image" in request.files:
+             path = save_uploaded_image(request.files["image"], prefix="noise_init")
+        else:
+             # Create a dummy blank image
+             dummy = Image.new("RGB", (512, 512), (255, 255, 255))
+             path = os.path.join(app.config["UPLOAD_FOLDER"], "dummy_noise.png")
+             dummy.save(path)
+             
+        out_img = sketch_to_image(path, prompt=prompt, strength=0.7)
+        return jsonify({"image": pil_to_base64(out_img)})
+        
+    except Exception as e:
+        print(f"ERROR in purify: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/noise/monster", methods=["POST"])
+def api_noise_monster():
+    """
+    Generate a monster sprite from noise
+    """
+    try:
+        prompt = "scary glitch monster, pixel art, dark void creature, red eyes, detailed"
+        
+        if "image" in request.files:
+             path = save_uploaded_image(request.files["image"], prefix="monster_init")
+        else:
+             # Create a dummy noise image using numpy
+             import numpy as np
+             noise_arr = np.random.randint(0, 255, (512, 512, 3), dtype=np.uint8)
+             dummy = Image.fromarray(noise_arr)
+             path = os.path.join(app.config["UPLOAD_FOLDER"], "dummy_monster.png")
+             dummy.save(path)
+             
+        out_img = sketch_to_image(path, prompt=prompt, strength=0.8)
+        return jsonify({"image": pil_to_base64(out_img)})
+        
+    except Exception as e:
+        print(f"ERROR in monster: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     app.run(debug=True)

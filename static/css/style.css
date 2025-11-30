@@ -262,3 +262,106 @@ canvas#detectCanvas {
     min-height: 180px;
   }
 }
+
+/* =========================================
+   HERO SECTION & LANDING PAGE STYLES
+   ========================================= */
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-glow {
+  0% { text-shadow: 0 0 10px rgba(0, 229, 168, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(0, 229, 168, 0.8), 0 0 30px rgba(0, 229, 168, 0.6); }
+  100% { text-shadow: 0 0 10px rgba(0, 229, 168, 0.5); }
+}
+
+.hero-section {
+  position: relative;
+  padding: 4rem 2rem;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 229, 168, 0.05) 0%, transparent 70%);
+}
+
+.hero-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #fff, #e0e0e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  animation: pulse-glow 3s infinite;
+}
+
+.hero-card {
+  background: rgba(15, 17, 21, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 3rem;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.floating-element {
+  position: absolute;
+  opacity: 0.6;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-1 { top: 10%; right: 10%; animation-delay: 0s; }
+.float-2 { bottom: 20%; left: 5%; animation-delay: 2s; }
+.float-3 { top: 40%; right: 25%; animation-delay: 4s; }
+
+.feature-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.feature-pill:hover {
+  background: rgba(0, 229, 168, 0.1);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 229, 168, 0.2);
+}
+
+.feature-pill i {
+  color: var(--accent);
+}
